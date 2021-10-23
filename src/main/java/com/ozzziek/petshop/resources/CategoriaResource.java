@@ -1,6 +1,10 @@
 package com.ozzziek.petshop.resources;
 
 import com.ozzziek.petshop.domain.Categoria;
+import com.ozzziek.petshop.services.CategoriaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,17 +16,14 @@ import java.util.List;
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Categoria> mostrar(){
-        Categoria c1 = new Categoria(1, "Alimento");
-        Categoria c2 = new Categoria(2, "Cosmético");
-        Categoria c3 = new Categoria(3, "Remédio");
+    @Autowired
+    private CategoriaService categoriaService;
 
-        List<Categoria> categorias = new ArrayList<>();
-        categorias.add(c1);
-        categorias.add(c2);
-        categorias.add(c3);
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Categoria> find(@PathVariable Integer id){
 
-        return categorias;
+        Categoria obj = categoriaService.find(id);
+
+        return ResponseEntity.ok().body(obj);
     }
 }
