@@ -1,9 +1,7 @@
 package com.ozzziek.petshop.utils;
 
-import com.ozzziek.petshop.domain.Categoria;
-import com.ozzziek.petshop.domain.Produto;
-import com.ozzziek.petshop.repositories.CategoriaRepository;
-import com.ozzziek.petshop.repositories.ProdutoRepository;
+import com.ozzziek.petshop.domain.*;
+import com.ozzziek.petshop.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +17,15 @@ public class PopulaDados {
 
     @Autowired
     ProdutoRepository produtoRepository;
+
+    @Autowired
+    EspecieRepository especieRepository;
+
+    @Autowired
+    RacaRepository racaRepository;
+
+    @Autowired
+    PetRepository petRepository;
 
     //NOTAÇÃO JAVA - executa após build do sistema
     @PostConstruct
@@ -44,5 +51,22 @@ public class PopulaDados {
 
         categoriaRepository.saveAll(Arrays.asList(c1, c2, c3));
         produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4));
+
+        Especie e1 = new Especie(null, "Cachorro");
+        Especie e2 = new Especie(null, "Gato");
+
+        Raca r1 = new Raca(null, "Akita");
+        Raca r2 = new Raca(null, "Shitzu");
+        Raca r3 = new Raca(null, "Persa");
+
+        Pet pet1 = new Pet(null, "John", 6, e1,r2);
+        Pet pet2 = new Pet(null, "Hana", 5, e1,r1);
+        Pet pet3 = new Pet(null, "Mewth", 8, e2,r3);
+
+        especieRepository.saveAll(Arrays.asList(e1, e2));
+        racaRepository.saveAll(Arrays.asList(r1,r2,r3));
+        petRepository.saveAll(Arrays.asList(pet1, pet2, pet3));
+
+
     }
 }
