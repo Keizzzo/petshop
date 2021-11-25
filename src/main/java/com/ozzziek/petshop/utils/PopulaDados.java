@@ -27,6 +27,12 @@ public class PopulaDados {
     @Autowired
     PetRepository petRepository;
 
+    @Autowired
+    EstadoRepository estadoRepository;
+
+    @Autowired
+    CidadeRepository cidadeRepository;
+
     //NOTAÇÃO JAVA - executa após build do sistema
     @PostConstruct
     public void cadastrar(){
@@ -66,6 +72,21 @@ public class PopulaDados {
         especieRepository.saveAll(Arrays.asList(e1, e2));
         racaRepository.saveAll(Arrays.asList(r1,r2,r3));
         petRepository.saveAll(Arrays.asList(pet1, pet2, pet3));
+
+        Estado es1 = new Estado(null, "São Paulo");
+        Estado es2 = new Estado(null, "Minas Gerais");
+
+        Cidade cid1 = new Cidade(null, "Belo Horizonte", es2);
+        Cidade cid2 = new Cidade(null, "Capelinha", es2);
+        Cidade cid3 = new Cidade(null, "Santo André", es1);
+
+        es1.getCidades().addAll(Arrays.asList(cid3));
+        es2.getCidades().addAll(Arrays.asList(cid1, cid2));
+
+        estadoRepository.saveAll(Arrays.asList(es1, es2));
+        cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
+
+
 
 
     }
