@@ -1,7 +1,6 @@
 package com.ozzziek.petshop.domain;
 
 import com.ozzziek.petshop.domain.enums.SituacaoPagamento;
-import com.ozzziek.petshop.services.Servico;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,7 +16,7 @@ public abstract class Pagamento implements Serializable {
     private Integer id;
 
     private Double valor;
-    private SituacaoPagamento situacao;
+    private Integer situacao;
 
     @OneToOne
     @JoinColumn(name = "id_servico")
@@ -29,7 +28,7 @@ public abstract class Pagamento implements Serializable {
     public Pagamento(Integer id, Double valor, SituacaoPagamento situacao, Servico servico) {
         this.id = id;
         this.valor = valor;
-        this.situacao = situacao;
+        this.situacao = situacao.getCodigo();
         this.servico = servico;
     }
 
@@ -50,11 +49,11 @@ public abstract class Pagamento implements Serializable {
     }
 
     public SituacaoPagamento getSituacao() {
-        return situacao;
+        return SituacaoPagamento.toEnum(situacao);
     }
 
     public void setSituacao(SituacaoPagamento situacao) {
-        this.situacao = situacao;
+        this.situacao = situacao.getCodigo();
     }
 
     public Servico getServico() {

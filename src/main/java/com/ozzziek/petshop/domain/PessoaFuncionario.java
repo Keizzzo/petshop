@@ -1,6 +1,9 @@
 package com.ozzziek.petshop.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class PessoaFuncionario extends Pessoa{
@@ -8,6 +11,9 @@ public class PessoaFuncionario extends Pessoa{
     private static final long serialVersionUID = 1L;
 
     private String funcao;
+
+    @OneToMany(mappedBy = "funcionario")
+    private List<Servico> servicos = new ArrayList<>();
 
     public PessoaFuncionario() {}
 
@@ -28,4 +34,11 @@ public class PessoaFuncionario extends Pessoa{
         this.funcao = funcao;
     }
 
+    public List<Servico> getServicos() {
+        return servicos;
+    }
+
+    public void setServicos(List<Servico> servicos) {
+        this.servicos = servicos;
+    }
 }

@@ -1,6 +1,4 @@
-package com.ozzziek.petshop.services;
-
-import com.ozzziek.petshop.domain.Pagamento;
+package com.ozzziek.petshop.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,14 +20,29 @@ public class Servico implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "servico")
     private Pagamento pagamento;
 
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    private PessoaCliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "id_funcionario")
+    private PessoaFuncionario funcionario;
+
     public Servico(){}
 
-    public Servico(Integer id, Date dataEntrada, Date dataSaida, String descricao, Pagamento pagamento) {
+    public Servico(Integer id,
+                   Date dataEntrada,
+                   Date dataSaida,
+                   String descricao,
+                   PessoaCliente cliente,
+                   PessoaFuncionario funcionario) {
         this.id = id;
         this.dataEntrada = dataEntrada;
         this.dataSaida = dataSaida;
         this.descricao = descricao;
         this.pagamento = pagamento;
+        this.cliente = cliente;
+        this.funcionario = funcionario;
     }
 
     @Override
@@ -83,5 +96,21 @@ public class Servico implements Serializable {
 
     public void setPagamento(Pagamento pagamento) {
         this.pagamento = pagamento;
+    }
+
+    public PessoaCliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(PessoaCliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public PessoaFuncionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(PessoaFuncionario funcionario) {
+        this.funcionario = funcionario;
     }
 }

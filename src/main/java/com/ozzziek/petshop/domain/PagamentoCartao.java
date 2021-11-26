@@ -1,7 +1,6 @@
 package com.ozzziek.petshop.domain;
 
 import com.ozzziek.petshop.domain.enums.SituacaoPagamento;
-import com.ozzziek.petshop.services.Servico;
 
 import javax.persistence.Entity;
 

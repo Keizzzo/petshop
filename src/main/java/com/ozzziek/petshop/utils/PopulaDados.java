@@ -1,12 +1,15 @@
 package com.ozzziek.petshop.utils;
 
 import com.ozzziek.petshop.domain.*;
+import com.ozzziek.petshop.domain.enums.SituacaoPagamento;
 import com.ozzziek.petshop.repositories.*;
+import com.ozzziek.petshop.domain.Servico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.sql.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,9 +43,15 @@ public class PopulaDados {
     @Autowired
     EnderecoRepository enderecoRepository;
 
+    @Autowired
+    ServicoRepository servicoRepository;
+
+    @Autowired
+    PagamentoRepository pagamentoRepository;
+
     //NOTAÇÃO JAVA - executa após build do sistema
     @PostConstruct
-    public void cadastrar(){
+    public void cadastrar() throws ParseException {
         Categoria c1 = new Categoria(null, "Alimento");
         Categoria c2 = new Categoria(null, "Cosmético");
         Categoria c3 = new Categoria(null, "Remédio");
@@ -138,6 +147,46 @@ public class PopulaDados {
         pessoaRepository.saveAll(Arrays.asList(pc, pf));
 
         enderecoRepository.saveAll(Arrays.asList(jw1, jw2, win));
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        Servico sv1 = new Servico(null,
+                sdf.parse("02/09/2021 09:00"),
+                sdf.parse("02/09/2021 12:00"),
+                "Banho",
+                pc,
+                pf);
+
+        Pagamento pag1 = new PagamentoDinheiro(null,
+                60.00,
+                SituacaoPagamento.QUITADO,
+                sv1,
+                sdf.parse("02/09/2021 12:04"),
+                0.0);
+
+        sv1.setPagamento(pag1);
+
+        Servico sv2 = new Servico(null,
+                sdf.parse("03/09/2021 12:00"),
+                sdf.parse("04/09/2021 12:00"),
+                "Hotel",
+                pc,
+                pf);
+
+        Pagamento pag2 = new PagamentoCartao(null,
+                255.99,
+                SituacaoPagamento.QUITADO,
+                sv2,
+                2);
+
+        sv2.setPagamento(pag2);
+
+        pc.getServicos().addAll(Arrays.asList(sv1, sv2));
+        pf.getServicos().addAll(Arrays.asList(sv1, sv2));
+
+        servicoRepository.saveAll(Arrays.asList(sv1, sv2));
+        pagamentoRepository.saveAll(Arrays.asList(pag1, pag2));
+
 
     }
 }
