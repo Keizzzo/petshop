@@ -1,5 +1,7 @@
 package com.ozzziek.petshop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,6 +45,8 @@ public class Estado implements Serializable {
         this.nome = nome;
     }
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "estado")
     public List<Cidade> getCidades() {
         return cidades;
     }
