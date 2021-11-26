@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.sql.Array;
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class PopulaDados {
@@ -32,6 +33,12 @@ public class PopulaDados {
 
     @Autowired
     CidadeRepository cidadeRepository;
+
+    @Autowired
+    PessoaRepository pessoaRepository;
+
+    @Autowired
+    EnderecoRepository enderecoRepository;
 
     //NOTAÇÃO JAVA - executa após build do sistema
     @PostConstruct
@@ -86,8 +93,51 @@ public class PopulaDados {
         estadoRepository.saveAll(Arrays.asList(es1, es2));
         cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
 
+        PessoaCliente pc = new PessoaCliente(null,
+                "John Wick",
+                "jw@continental",
+                "39402850805",
+                "Fisica");
+        pc.getTelefones().addAll(Arrays.asList("+5511992413986","+5519997043466"));
 
+        PessoaFuncionario pf = new PessoaFuncionario(null,
+                "Winston",
+                "manager@continental",
+                "11111111111",
+                "Gerente");
+        pf.getTelefones().addAll(List.of("+01111111"));
 
+        Endereco jw1 = new Endereco(null,
+                "Maringa",
+                "131",
+                "NA",
+                "Vila Helena",
+                "09175440",
+                cid1,
+                pc);
+
+        Endereco jw2 = new Endereco(null,
+                "Espirito Santo",
+                "215",
+                "Hotel Nacional INN",
+                "Centro",
+                "30160030",
+                cid3,
+                pc);
+
+        Endereco win = new Endereco(null,
+                "Espirito Santo",
+                "215",
+                "Hotel Nacional INN",
+                "Centro",
+                "30160030",
+                cid3,
+                pf);
+
+        //Polimorfismo Cliente e Funcionario
+        pessoaRepository.saveAll(Arrays.asList(pc, pf));
+
+        enderecoRepository.saveAll(Arrays.asList(jw1, jw2, win));
 
     }
 }

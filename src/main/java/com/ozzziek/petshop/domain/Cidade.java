@@ -2,6 +2,8 @@ package com.ozzziek.petshop.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +19,9 @@ public class Cidade implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_estado")
     private Estado estado;
+
+    @OneToMany(mappedBy = "cidade")
+    private List<Endereco> enderecos = new ArrayList<>();
 
     public Cidade() {}
 
