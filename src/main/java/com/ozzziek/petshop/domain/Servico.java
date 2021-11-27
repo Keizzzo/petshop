@@ -2,7 +2,9 @@ package com.ozzziek.petshop.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -28,6 +30,16 @@ public class Servico implements Serializable {
     @JoinColumn(name = "id_funcionario")
     private PessoaFuncionario funcionario;
 
+    @ManyToOne
+    @JoinColumn(name = "id_pet")
+    private Pet pet;
+
+    @ManyToMany
+    @JoinTable(name = "SERVICO_PRODUTO",
+    joinColumns = @JoinColumn(name = "id_servico"),
+    inverseJoinColumns = @JoinColumn(name = "id_produto"))
+    private List<Produto> produtos = new ArrayList<>();
+
     public Servico(){}
 
     public Servico(Integer id,
@@ -35,7 +47,8 @@ public class Servico implements Serializable {
                    Date dataSaida,
                    String descricao,
                    PessoaCliente cliente,
-                   PessoaFuncionario funcionario) {
+                   PessoaFuncionario funcionario,
+                   Pet pet) {
         this.id = id;
         this.dataEntrada = dataEntrada;
         this.dataSaida = dataSaida;
@@ -43,6 +56,7 @@ public class Servico implements Serializable {
         this.pagamento = pagamento;
         this.cliente = cliente;
         this.funcionario = funcionario;
+        this.pet = pet;
     }
 
     @Override
@@ -112,5 +126,21 @@ public class Servico implements Serializable {
 
     public void setFuncionario(PessoaFuncionario funcionario) {
         this.funcionario = funcionario;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 }

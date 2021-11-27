@@ -155,7 +155,8 @@ public class PopulaDados {
                 sdf.parse("02/09/2021 12:00"),
                 "Banho",
                 pc,
-                pf);
+                pf,
+                pet1);
 
         Pagamento pag1 = new PagamentoDinheiro(null,
                 60.00,
@@ -171,7 +172,8 @@ public class PopulaDados {
                 sdf.parse("04/09/2021 12:00"),
                 "Hotel",
                 pc,
-                pf);
+                pf,
+                pet2);
 
         Pagamento pag2 = new PagamentoCartao(null,
                 255.99,
@@ -180,12 +182,31 @@ public class PopulaDados {
                 2);
 
         sv2.setPagamento(pag2);
+        sv2.getProdutos().addAll(Arrays.asList(p1, p2, p4));
 
         pc.getServicos().addAll(Arrays.asList(sv1, sv2));
         pf.getServicos().addAll(Arrays.asList(sv1, sv2));
 
-        servicoRepository.saveAll(Arrays.asList(sv1, sv2));
-        pagamentoRepository.saveAll(Arrays.asList(pag1, pag2));
+        Servico sv3 = new Servico(null,
+                sdf.parse("05/09/2021 16:00"),
+                sdf.parse("05/09/2021 16:30"),
+                "Vermifugação",
+                pc,
+                pf,
+                pet3);
+
+        Pagamento pag3 = new PagamentoDinheiro(null,
+                75.00,
+                SituacaoPagamento.PENDENTE,
+                sv3,
+                sdf.parse("02/09/2021 16:32"),
+                0.0);
+
+        sv3.setPagamento(pag3);
+        sv3.getProdutos().addAll(List.of(p3));
+
+        servicoRepository.saveAll(Arrays.asList(sv1, sv2, sv3));
+        pagamentoRepository.saveAll(Arrays.asList(pag1, pag2, pag3));
 
 
     }
