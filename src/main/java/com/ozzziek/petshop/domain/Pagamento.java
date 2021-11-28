@@ -1,5 +1,6 @@
 package com.ozzziek.petshop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ozzziek.petshop.domain.enums.SituacaoPagamento;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public abstract class Pagamento implements Serializable {
     private Double valor;
     private Integer situacao;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "id_servico")
     @MapsId

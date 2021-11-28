@@ -1,5 +1,7 @@
 package com.ozzziek.petshop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ public class PessoaFuncionario extends Pessoa{
 
     private String funcao;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "funcionario")
     private List<Servico> servicos = new ArrayList<>();
 
