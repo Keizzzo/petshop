@@ -1,5 +1,6 @@
 package com.ozzziek.petshop.resources.exceptions;
 
+import com.ozzziek.petshop.services.exceptions.IntegridadeDeDadosException;
 import com.ozzziek.petshop.services.exceptions.ObjetoNaoEncontradoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,5 +17,12 @@ public class ResourceExceptionHandler {
                                                              HttpServletRequest request){
         StandardError erro = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+    }
+
+    @ExceptionHandler(IntegridadeDeDadosException.class)
+    public ResponseEntity<StandardError> erroEmIntegridadeDeDados(IntegridadeDeDadosException e,
+                                                             HttpServletRequest request){
+        StandardError erro = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
     }
 }
