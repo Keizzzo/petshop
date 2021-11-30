@@ -2,6 +2,7 @@ package com.ozzziek.petshop.resources;
 
 import com.ozzziek.petshop.domain.Pessoa;
 import com.ozzziek.petshop.domain.PessoaCliente;
+import com.ozzziek.petshop.domain.dto.PessoaDTO;
 import com.ozzziek.petshop.services.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/pessoas")
@@ -54,10 +56,13 @@ public class PessoaResource {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Pessoa>> findAll(){
+    public ResponseEntity<List<PessoaDTO>> findAll(){
 
-        List<Pessoa> obj = pessoaService.findAll();
+        List<Pessoa> pessoas = pessoaService.findAll();
 
-        return ResponseEntity.ok().body(obj);
+        //OBS: Construtor de PessoaDTO recebe objeto tipo Pessoa por isso: PessoaDTO::new
+        List<PessoaDTO> pessoaDTOS = pessoas.stream().map(PessoaDTO::new).collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(pessoaDTOS);
     }
 }
