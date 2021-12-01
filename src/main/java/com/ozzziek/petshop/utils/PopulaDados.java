@@ -50,7 +50,7 @@ public class PopulaDados {
     PagamentoRepository pagamentoRepository;
 
     //NOTAÇÃO JAVA - executa após build do sistema
-    @PostConstruct
+//    @PostConstruct //Usar só 1 vez, se nao fica persistindo
     public void cadastrar() throws ParseException {
         Categoria c1 = new Categoria(null, "Alimento");
         Categoria c2 = new Categoria(null, "Cosmético");
